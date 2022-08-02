@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       loginForm: {
-        mobile: '13800000002',
+        mobile: '13800000001',
         password: '123456',
       },
       loginRules: {
@@ -83,6 +83,7 @@ export default {
       try {
         this.$refs.loginForm.validate()
         await this.$store.dispatch('user/getToken', this.loginForm)
+        this.$message.success('登陆成功')
         this.$router.push('/')
       } catch (error) {
       } finally {

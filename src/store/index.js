@@ -16,10 +16,13 @@ const store = new Vuex.Store({
   getters,
   plugins: [
     createVuexPersisted({
-      reducer(val) {
+      reducer(state) {
         // 指定存储某个模块的数据
+        // console.log(val);
         return {
-          user: val.user,
+          user: {
+            token:state.user.token
+          }
         }
       },
     }),
