@@ -8,7 +8,7 @@ import { getTokenTime } from './auth'
 const isTimeOut = () => {
   const current = Date.now()
   const tokenTime = getTokenTime()
-  const timeout = 2 * 60 * 1000
+  const timeout = 2 * 60 * 60 * 1000
   return current - tokenTime > timeout
 }
 // 创建一个axios的实例
