@@ -60,10 +60,10 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      console.log(this.$route);
+      // console.log(this.$route);
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)// ?redirect=${this.$route.fullPath 告诉用户从哪个页面跳过来的
     },
-  },
+  }
 }
 </script>
 
