@@ -6,7 +6,7 @@
       @toggleClick="toggleSideBar"
     />
     <div class="app-breadcrumb">
-      {{$store.state.user.userInfo.companyName}}
+      {{ $store.state.user.userInfo.companyName }}
       <span class="breadBtn">体验版</span>
     </div>
     <!-- <breadcrumb class="breadcrumb-container" /> -->
@@ -14,8 +14,12 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src='$store.state.user.userInfo.staffPhoto' class="user-avatar" />
-          <span>{{$store.state.user.userInfo.username}}</span>
+          <img
+            :src="$store.state.user.userInfo.staffPhoto"
+            v-imgError="defaultImg"
+            class="user-avatar"
+          />
+          <span>{{ $store.state.user.userInfo.username }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -35,8 +39,14 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-
+import defaultImg from '@/assets/zjl.jpg'
 export default {
+  data() {
+    return {
+      defaultImg:defaultImg
+    //     'https://tse3-mm.cn.bing.net/th/id/OIP-C.8olSEek1RZjSQDgPizhxEAHaJ3?pid=ImgDet&rs=1',
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -50,7 +60,8 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      console.log(this.$route);
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)// ?redirect=${this.$route.fullPath 告诉用户从哪个页面跳过来的
     },
   },
 }

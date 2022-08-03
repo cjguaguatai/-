@@ -14,12 +14,15 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
-// mock假数据
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
+import * as directives from '@/directives'
+for (let k in directives) {
+  Vue.directive(k, directives[k])
 }
+// mock假数据
+// if (process.env.NODE_ENV === 'production') {
+//   const { mockXHR } = require('../mock')
+//   mockXHR()
+// }
 
 // 注册element ui
 Vue.use(ElementUI, { locale })
@@ -35,5 +38,5 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: (h) => h(App)
+  render: (h) => h(App),
 })
