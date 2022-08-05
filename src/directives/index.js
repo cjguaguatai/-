@@ -1,7 +1,8 @@
 export const imgError = {
-  inserted: function (el, { value }) {
+  inserted: function (el, options) {
+    // console.log(el);
     el.onerror = () => {
-      el.src = value
+      el.src = options.value
     }
   },
 }
