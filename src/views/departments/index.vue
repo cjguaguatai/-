@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
-      <el-card class="box-card">
+      <el-card class="box-card" v-loading="loading">
         <!-- 头部 -->
         <tree-tools
           :treeNode="{ name: '呱呱太教育', manager: '负责人' }"
@@ -17,15 +17,21 @@
           <template v-slot="scope">
             <tree-tools
               :treeNode="scope.data"
-              @remove="getDeptsApi"
-              @add="dialogFormVisible = true"
+              @remove="getDeptsApi()"
+              @add="showAddDept"
+              @edit="showEdit"
             />
           </template>
         </el-tree>
       </el-card>
     </div>
     <!-- 添加部门弹层 -->
-    <add-dept :visible="dialogFormVisible" />
+    <add-dept
+      @addDepts="getDeptsApi()"
+      :visible.sync="dialogFormVisible"
+      :currentNode="currentNode"
+      ref="addDept"
+    />
   </div>
 </template>
 
@@ -47,6 +53,8 @@ export default {
         label: 'name',
       },
       dialogFormVisible: false,
+      currentNode: {},
+      loading:false
     }
   },
 
@@ -57,12 +65,22 @@ export default {
   methods: {
     async getDeptsApi() {
       try {
+        this.loading=true
         const res = await getDeptsApi()
         this.departs = transListToTree(res.depts, '')
         // console.log(transListToTree(res.depts, ''))
+        this.loading=false
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
+    },
+    showAddDept(data) {
+      this.dialogFormVisible = true
+      this.currentNode = data
+    },
+    showEdit(obj) {
+      this.dialogFormVisible = true
+      this.$refs.addDept.getDeptsById(obj.id)
     },
   },
 }
