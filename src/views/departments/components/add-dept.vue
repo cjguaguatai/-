@@ -67,7 +67,10 @@ export default {
         // console.log('id', flag)
       } else {
         if (!this.currentNode.children) return callback()
-        flag = this.currentNode.children.some((ele) => ele.name === value)
+        flag = this.currentNode.children.some((ele) => {
+          console.log(ele.name)
+          ele.name === value
+        })
         // console.log('noid', flag)
       }
       flag ? callback(new Error('部门重复')) : callback()

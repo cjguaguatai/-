@@ -18,6 +18,9 @@ import * as directives from '@/directives'
 for (let k in directives) {
   Vue.directive(k, directives[k])
 }
+
+import components from '@/components'
+Vue.use(components)
 // mock假数据
 // if (process.env.NODE_ENV === 'production') {
 //   const { mockXHR } = require('../mock')
