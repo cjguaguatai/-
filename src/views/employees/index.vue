@@ -61,7 +61,12 @@
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template slot-scope="{ row }">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="$router.push('/employees/detail/' + row.id)"
+                >查看</el-button
+              >
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
@@ -95,7 +100,7 @@
 
 <script>
 import { getEmployeeList, delEmployee } from '@/api/employees'
-import AddEmployee from './componments/add-employee.vue'
+import AddEmployee from './components/add-employee.vue'
 import employees from '@/constant/employees'
 const { exportExcelMapPath, hireType } = employees
 export default {
