@@ -11,14 +11,18 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
 import '@/icons' // icon
 import '@/permission' // permission control
+// 注册自定义指令
 import * as directives from '@/directives'
 for (let k in directives) {
   Vue.directive(k, directives[k])
 }
-
+// 注册过滤器
+import * as filters from '@/filters'
+for (let k in filters) {
+  Vue.filter(k, filters[k])
+}
 import components from '@/components'
 Vue.use(components)
 // mock假数据
