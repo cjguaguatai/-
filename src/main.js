@@ -13,6 +13,8 @@ import store from './store'
 import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
+import print from 'vue-print-nb'
+Vue.use(print)
 // 注册自定义指令
 import * as directives from '@/directives'
 for (let k in directives) {

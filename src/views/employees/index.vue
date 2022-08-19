@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="app-container">
       <page-tools>
-        <span slot="left-tag">共166条记录</span>
+        <span slot="left-tag">共{{ page.total }}条记录</span>
         <template slot="right">
           <el-button
             size="small"
@@ -33,6 +33,7 @@
                   width: 60px;
                   hight: 60px padding=10px;
                 "
+                @click="showErCodeDialog(row.staffPhoto)"
               />
             </template>
           </el-table-column>
@@ -94,6 +95,9 @@
         </el-row>
       </el-card>
     </div>
+    <el-dialog title="头像二维码" :visible.sync="erCodeDialog">
+      <canvas id="canvas"></canvas>
+    </el-dialog>
     <add-employee :visible.sync="showAddEmployee"></add-employee>
   </div>
 </template>
@@ -102,6 +106,7 @@
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import AddEmployee from './components/add-employee.vue'
 import employees from '@/constant/employees'
+import QRcode from 'qrcode'
 const { exportExcelMapPath, hireType } = employees
 export default {
   name: 'employees',
@@ -114,6 +119,7 @@ export default {
         total: 0,
       },
       showAddEmployee: false,
+      erCodeDialog: false,
     }
   },
 
@@ -185,6 +191,14 @@ export default {
         filename: '呱呱太', //非必填
         autoWidth: true, //非必填
         bookType: 'xlsx', //非必填
+      })
+    },
+    // 点击显示二维码弹层
+    showErCodeDialog(staffPhoto) {
+      if (!staffPhoto) return this.$message.error('该用户未设置头像')
+      this.erCodeDialog = true
+      this.$nextTick(() => {
+        QRcode.toCanvas(canvas, staffPhoto)
       })
     },
   },
