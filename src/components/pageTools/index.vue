@@ -27,7 +27,9 @@ export default {
 
   created() {},
 
-  methods: {},
+  methods: {
+    
+  },
 
   props: {
     isShowLeft: {
@@ -42,4 +44,8 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="scss">
+.el-table [class*='el-table__row--level'] .el-table__expand-icon {
+  display: none;
+}
+</style>

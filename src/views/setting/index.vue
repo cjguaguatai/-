@@ -3,16 +3,25 @@
     <div class="app-container">
       <el-tabs v-model="activeName">
         <el-tab-pane label="角色管理" name="first">
-          <el-button type="primary" @click="dialogVisible = true"
+          <el-button
+            type="primary"
+            @click="dialogVisible = true"
+            v-isHas="point.roles.add"
             >新增角色</el-button
           >
+          <!-- v-if="isHas(point.roles.add)" -->
           <el-table :data="tableData" style="width: 100%">
             <el-table-column type="index" label="序号"> </el-table-column>
             <el-table-column prop="name" label="角色"> </el-table-column>
             <el-table-column prop="description" label="描述"> </el-table-column>
             <el-table-column label="操作">
-              <template>
-                <el-button type="success" size="small">权限分配</el-button>
+              <template slot-scope="{ row }">
+                <el-button
+                  type="success"
+                  size="small"
+                  @click="rightsBtn(row.id)"
+                  >权限分配</el-button
+                >
                 <el-button type="primary" size="small">编辑</el-button>
                 <el-button type="danger" size="small">删除</el-button>
               </template>
@@ -79,14 +88,45 @@
           <el-button type="primary" @click="onAddRole">确 定</el-button>
         </span>
       </el-dialog>
+      <!-- 权限分配 -->
+      <el-dialog
+        title="权限分配"
+        :visible.sync="setRightsDialog"
+        width="50%"
+        @close="onCloseRole"
+        :destroy-on-close="true"
+      >
+        <el-tree
+          :data="permissions"
+          :props="{ label: 'name' }"
+          default-expand-all
+          show-checkbox
+          node-key="id"
+          :default-checked-keys="defaultCheckedKeys"
+          ref="roleTree"
+        ></el-tree>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="onCloseRole">取 消</el-button>
+          <el-button type="primary" @click="onSave">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { getRolesApi, addRolesApi } from '@/api/role'
+import {
+  getRolesApi,
+  addRolesApi,
+  getRoleInfo,
+  updateRoleInfo,
+} from '@/api/role'
 import { getCompanyInfo } from '@/api/setting'
+import { getPermissionList } from '@/api/permission'
+import { transListToTree } from '@/utils'
+import permissionMixin from '@/mixins/permission'
 export default {
+  name: 'setting',
   data() {
     return {
       activeName: 'first',
@@ -104,12 +144,18 @@ export default {
         name: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
       },
       companyInfo: {},
+      setRightsDialog: false,
+      permissions: [], // 权限树形数据
+      defaultCheckedKeys: [], //分配权限
+      roleId: '',
     }
   },
+  mixins: [permissionMixin],
 
   created() {
     this.getRolesApi()
     this.getCompanyInfo()
+    this.getPermissionList()
   },
 
   methods: {
@@ -149,6 +195,34 @@ export default {
       )
       // console.log(res)
       this.companyInfo = res
+    },
+    // 根据id获取角色详情
+    async rightsBtn(id) {
+      const res = await getRoleInfo(id)
+      this.setRightsDialog = true
+      this.roleId = id
+      this.defaultCheckedKeys = res.permIds
+    },
+    // 获取所有权限点
+    async getPermissionList() {
+      const res = await getPermissionList()
+      // console.log(res);
+      const treePermission = transListToTree(res, '0')
+      this.permissions = treePermission
+    },
+    // 关闭权限弹窗
+    onCloseRole() {
+      // console.log('close')
+      this.setRightsDialog = false
+      this.defaultCheckedKeys = []
+    },
+    // 确认提交
+    async onSave() {
+      const res = await updateRoleInfo({
+        id: this.roleId,
+        permIds: this.$refs.roleTree.getCheckedKeys(),
+      })
+      this.onCloseRole()
     },
   },
 }

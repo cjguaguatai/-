@@ -28,7 +28,7 @@
           <el-tab-pane label="个人详情" name="user">
             <user-info></user-info>
           </el-tab-pane>
-          <el-tab-pane label="岗位信息" name="job" >
+          <el-tab-pane label="岗位信息" name="job">
             <job-info></job-info>
           </el-tab-pane>
         </el-tabs>
@@ -49,9 +49,14 @@ export default {
       activeName: Cookies.get('employeeDetailTab') || 'account',
     }
   },
-
+  // props: {
+  //   id:{
+  //     type:String
+  //   }
+  // },
   created() {
     this.getUserDetail()
+    // console.log(this)
   },
 
   methods: {

@@ -8,12 +8,18 @@
             size="small"
             type="warning"
             @click="$router.push('/import')"
+            v-if="isHas(point.employees.import)"
             >导入</el-button
           >
-          <el-button size="small" type="danger" @click="exportExcel"
+
+          <el-button size="small" type="danger" @click="exportExcel" autofocus
             >导出</el-button
           >
-          <el-button size="small" type="primary" @click="showAddEmployee = true"
+          <el-button
+            size="small"
+            type="primary"
+            @click="showAddEmployee = true"
+            v-if="isHas(point.employees.add)"
             >新增员工</el-button
           >
         </template>
@@ -71,8 +77,14 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="onRemove(row.id)"
+              <el-button type="text" size="small" @click="roleBtn(row.id)"
+                >角色</el-button
+              >
+              <el-button
+                type="text"
+                size="small"
+                @click="onRemove(row.id)"
+                v-if="isHas(point.employees.del)"
                 >删除</el-button
               >
             </template>
@@ -95,18 +107,24 @@
         </el-row>
       </el-card>
     </div>
+    <!-- 二维码显示框 -->
     <el-dialog title="头像二维码" :visible.sync="erCodeDialog">
       <canvas id="canvas"></canvas>
     </el-dialog>
+    <!-- 新增员工弹框 -->
     <add-employee :visible.sync="showAddEmployee"></add-employee>
+    <!-- 权限框 -->
+    <assign-role :visible.sync="showDialog" :id="roleId"></assign-role>
   </div>
 </template>
 
 <script>
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import AddEmployee from './components/add-employee.vue'
+import AssignRole from './components/assign-role.vue'
 import employees from '@/constant/employees'
 import QRcode from 'qrcode'
+import permissionMixin from '@/mixins/permission'
 const { exportExcelMapPath, hireType } = employees
 export default {
   name: 'employees',
@@ -120,10 +138,14 @@ export default {
       },
       showAddEmployee: false,
       erCodeDialog: false,
+      showDialog: false,
+      roleId: '',
     }
   },
 
-  components: { AddEmployee },
+  mixins: [permissionMixin],
+  
+  components: { AddEmployee, AssignRole },
 
   created() {
     this.getEmployeeList(this.page)
@@ -200,6 +222,10 @@ export default {
       this.$nextTick(() => {
         QRcode.toCanvas(canvas, staffPhoto)
       })
+    },
+    roleBtn(id) {
+      this.roleId = id
+      this.showDialog = true
     },
   },
 }
