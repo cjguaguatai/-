@@ -5,19 +5,22 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
+
+    <!-- <breadcrumb class="breadcrumb-container" /> -->
     <div class="app-breadcrumb">
       {{ $store.state.user.userInfo.companyName }}
       <span class="breadBtn">体验版</span>
     </div>
-    <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      <ToggleLang />
+      <FullScreen />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img
             :src="$store.state.user.userInfo.staffPhoto"
-            v-imgError="defaultImg"
             class="user-avatar"
+            v-imgError="defaultImg"
           />
           <span>{{ $store.state.user.userInfo.username }}</span>
           <i class="el-icon-caret-bottom" />
@@ -39,12 +42,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import defaultImg from '@/assets/zjl.jpg'
+import defaultImg from '@/assets/common/head.jpg'
+
 export default {
+  // 如果想在data中定义本地图片路径,需要先引入
   data() {
     return {
-      defaultImg: defaultImg,
-      // 'https://tse3-mm.cn.bing.net/th/id/OIP-C.8olSEek1RZjSQDgPizhxEAHaJ3?pid=ImgDet&rs=1',
+      defaultImg,
     }
   },
   components: {
@@ -60,8 +64,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      // console.log(this.$route);
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`) // ?redirect=${this.$route.fullPath 告诉用户从哪个页面跳过来的
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
   },
 }
@@ -72,9 +75,9 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   background-image: -webkit-linear-gradient(left, #3d6df8, #5b8cff);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
   .app-breadcrumb {
     display: inline-block;
     font-size: 18px;
@@ -93,6 +96,7 @@ export default {
       margin-left: 15px;
     }
   }
+
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -100,7 +104,7 @@ export default {
     cursor: pointer;
     transition: background 0.3s;
     -webkit-tap-highlight-color: transparent;
-    color: #ffffff;
+    color: #fff;
     fill: currentColor;
 
     &:hover {
@@ -116,7 +120,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-
+    display: flex;
     &:focus {
       outline: none;
     }
@@ -147,9 +151,12 @@ export default {
         display: flex;
         align-items: center;
         color: #fff;
+        cursor: pointer;
+
         span {
           margin: 0 3px;
         }
+
         .user-avatar {
           cursor: pointer;
           width: 40px;

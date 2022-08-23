@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
@@ -33,10 +33,11 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters(['sidebar']),
-    ...mapState('permission',['routes']),
-    // routes() {
-    //   return this.$router.options.routes
-    // },
+    routes() {
+      // 可以获取到所有路由规则(动态添加的)
+      //  我们自己去维护一个路由规则(所有路由)
+      return this.$store.state.permission.routes
+    },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

@@ -416,7 +416,7 @@ export default {
       value: '离职',
     },
   ],
-  mapKeyPath: {
+  importMapKeyPath: {
     入职日期: 'timeOfEntry',
     姓名: 'username',
     工号: 'workNumber',

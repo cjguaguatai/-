@@ -1,11 +1,9 @@
 import request from '@/utils/request'
 
 /**
- * 获取所有角色列表
- * @param {Object} params
- * @returns
+ * 获取角色列表
  */
-export const getRolesApi = (params) => {
+export function getRolesApi(params) {
   return request({
     url: '/sys/role',
     params,
@@ -14,23 +12,33 @@ export const getRolesApi = (params) => {
 
 /**
  * 添加角色
- * @param {Object} data
- * @returns
+ * @param {*} data {name, region}
  */
-export const addRolesApi = (data) => {
+export function addRoleApi(data) {
   return request({
     url: '/sys/role',
-    method: 'post',
+    method: 'POST',
     data,
   })
 }
 
 /**
- * 根据id获取角色详情
- * @param {*} id
- * @returns
+ * 通过角色id实现删除
+ * @param {*} id 角色id
  */
-export const getRoleInfo = (id) => {
+export function removeRoleApi(id) {
+  return request({
+    url: '/sys/role/' + id,
+    method: 'DELETE',
+  })
+}
+
+/**
+ * 根据id获取角色详情
+ * @param {*} id 角色id
+ * @returns promise
+ */
+export function getRolesInfo(id) {
   return request({
     url: '/sys/role/' + id,
   })
@@ -38,13 +46,13 @@ export const getRoleInfo = (id) => {
 
 /**
  * 给角色分配权限
- * @param {Object} data
- * @returns
+ * @param {*} data { id, permIds }
+ * @returns promise
  */
-export const updateRoleInfo = (data) => {
+export function assignPerm(data) {
   return request({
     url: '/sys/role/assignPrem',
-    data,
     method: 'put',
+    data,
   })
 }

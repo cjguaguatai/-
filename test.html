@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .container{
+        .container {
             background-color: #000;
             /* overflow: hidden; */
         }
-        .box{
+
+        .box {
             margin: 100px;
             width: 100px;
             height: 100px;
@@ -83,7 +84,7 @@
     //     }
     // ]
 
-    
+
 
     // const header = Object.keys(exportExcelMapPath)
     // console.log(header);
@@ -97,6 +98,63 @@
     //     })
     // })
     // console.log(data);
+    // const async1 = async () => {
+    //     console.log('async1');
+    //     setTimeout(() => {
+    //         console.log('timer1')
+    //     }, 2000);
+    //     await new Promise(resolve => {
+    //         console.log('promise1')
+    //     })
+    //     console.log('async1 end');
+    //     return 'async1 success';
+    // }
+    // console.log('script start');
+    // async1().then((res) => console.log(res));
+    // console.log('script end');
+    // Promise.resolve(1)
+    //     .then(2)
+    //     .then(Promise.resolve(3))
+    //     .catch(4)
+    //     .then((res) => console.log(res));
+    // setTimeout(() => {
+    //     console.log('timer2');
+    // }, 1000)
+    // for (let i = 0; i < 5; i++) {
+    //     setTimeout(() => {
+    //         console.log(i);
+    //     }, 2000)
+    // }
+    function* fn() {
+        yield new Promise(resolve => {
+            setTimeout(() => {
+                console.log(1)
+                resolve()
+            }, 2000)
+        })
+
+        yield new Promise(resolve => {
+            setTimeout(() => {
+                console.log(2)
+                resolve()
+            }, 1000)
+        })
+
+        yield new Promise(resolve => {
+            setTimeout(() => {
+                console.log(3)
+                resolve()
+            }, 3000)
+        })
+    }
+
+    // console.log(fn().next());
+    const gen = fn()
+    gen.next().value.then(() => {
+        gen.next().value.then(() => {
+            gen.next()
+        })
+    })
 
 </script>
 
