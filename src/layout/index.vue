@@ -58,6 +58,13 @@ export default {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     },
   },
+  watch: {
+    '$route.path': function (to, from) {
+      console.log(to)
+      console.log(from)
+      console.log(this.$route);
+    },
+  },
 }
 </script>
 

@@ -143,6 +143,7 @@ export default {
     ...mapGetters(['name']),
   },
   components: { radar },
+  
 }
 </script>
 

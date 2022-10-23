@@ -125,37 +125,249 @@
     //         console.log(i);
     //     }, 2000)
     // }
-    function* fn() {
-        yield new Promise(resolve => {
-            setTimeout(() => {
-                console.log(1)
-                resolve()
-            }, 2000)
-        })
 
-        yield new Promise(resolve => {
-            setTimeout(() => {
-                console.log(2)
-                resolve()
-            }, 1000)
-        })
 
-        yield new Promise(resolve => {
-            setTimeout(() => {
-                console.log(3)
-                resolve()
-            }, 3000)
-        })
-    }
+    // function* fn() {
+    //     yield new Promise(resolve => {
+    //         setTimeout(() => {
+    //             console.log(1)
+    //             resolve()
+    //         }, 2000)
+    //     })
+
+    //     yield new Promise(resolve => {
+    //         setTimeout(() => {
+    //             console.log(2)
+    //             resolve()
+    //         }, 1000)
+    //     })
+
+    //     yield new Promise(resolve => {
+    //         setTimeout(() => {
+    //             console.log(3)
+    //             resolve()
+    //         }, 3000)
+    //     })
+    // }
 
     // console.log(fn().next());
-    const gen = fn()
-    gen.next().value.then(() => {
-        gen.next().value.then(() => {
-            gen.next()
-        })
-    })
 
+
+    // const gen = fn()
+    // gen.next().value.then(() => {
+    //     gen.next().value.then(() => {
+    //         gen.next()
+    //     })
+    // })
+
+
+    // function Animal() { }
+    // Animal.prototype.run = function () {
+    //     console.log('跑跑跑')
+    // }
+    // function Dog(name, age) {
+    //     this.name = name
+    //     this.age = age
+    // }
+    // // console.log(new Animal());
+    // console.dir(Dog);
+    // Dog.prototype = new Animal()
+    // function Cat(name, age) {
+    //     this.name = name
+    //     this.age = age
+    // }
+    // const dog = new Dog('大黄', 19)
+    // console.log(dog)
+    // dog.run() 
+    // const arr = [1, 2, 3, 4, 5, 6, 7]
+
+    // console.log(arr.includes(1));
+    // console.log(arr.length);
+    // function cloneDeep3(source, uniqueList) {
+    //     if (!isObject(source)) return source
+    //     if (!uniqueList) uniqueList = [] // 新增代码，初始化数组
+    //     var target = Array.isArray(source) ? [] : {}
+
+    //     // 要是有 别再循环拷贝了 直接返回 该值
+    //     var uniqueData = find(uniqueList, source)
+    //     if (uniqueData) {
+    //         return uniqueData.target
+    //     }
+
+    //     // 数据不存在，保存源数据，以及对应的引用
+    //     uniqueList.push({
+    //         source: source,
+    //         target: target
+    //     })
+    //     // =============
+
+    //     for (var key in source) {
+    //         if (Object.prototype.hasOwnProperty.call(source, key)) {
+    //             if (isObject(source[key])) {
+    //                 target[key] = cloneDeep3(source[key], uniqueList) // 新增代码，传入数组
+    //             } else {
+    //                 target[key] = source[key]
+    //             }
+    //         }
+    //     }
+    //     return target
+    // }
+
+    // // 新增方法，用于查找
+    // function find(arr, item) {
+    //     for (var i = 0; i < arr.length; i++) {
+    //         if (arr[i].source === item) {
+    //             return arr[i]
+    //         }
+    //     }
+    //     return null
+    // }
+    // 用上面测试用例已测试通过
+
+
+
+    // Promise.resolve().then(() => {
+    //     console.log(0);
+    //     return Promise.resolve(4);
+    // }).then((res) => {
+    //     console.log(res)
+    // })
+
+    // Promise.resolve().then(() => {
+    //     console.log(1);
+    // }).then(() => {
+    //     console.log(2);
+    // }).then(() => {
+    //     console.log(3);
+    // }).then(() => {
+    //     console.log(5);
+    // }).then(() => {
+    //     console.log(6);
+    // })
+
+
+
+    // // 获取数组的原型Array.prototype，上面有我们常用的数组方法
+    // const arrayProto = Array.prototype
+    // // 创建一个空对象arrayMethods，并将arrayMethods的原型指向Array.prototype
+    // export const arrayMethods = Object.create(arrayProto)
+
+    // // 列出需要重写的数组方法名
+    // const methodsToPatch = [
+    //     'push',
+    //     'pop',
+    //     'shift',
+    //     'unshift',
+    //     'splice',
+    //     'sort',
+    //     'reverse'
+    // ]
+    // // 遍历上述数组方法名，依次将上述重写后的数组方法添加到arrayMethods对象上
+    // methodsToPatch.forEach(function (method) {
+    //     // 保存一份当前的方法名对应的数组原始方法
+    //     const original = arrayProto[method]
+    //     // 将重写后的方法定义到arrayMethods对象上，function mutator() {}就是重写后的方法
+    //     def(arrayMethods, method, function mutator(...args) {
+    //         // 调用数组原始方法，并传入参数args，并将执行结果赋给result
+    //         const result = original.apply(this, args)
+    //         // 当数组调用重写后的方法时，this指向该数组，当该数组为响应式时，就可以获取到其__ob__属性
+    //         const ob = this.__ob__
+    //         let inserted
+    //         switch (method) {
+    //             case 'push':
+    //             case 'unshift':
+    //                 inserted = args
+    //                 break
+    //             case 'splice':
+    //                 inserted = args.slice(2)
+    //                 break
+    //         }
+    //         if (inserted) ob.observeArray(inserted)
+    //         // 将当前数组的变更通知给其订阅者
+    //         ob.dep.notify()
+    //         // 最后返回执行结果result
+    //         return result
+    //     })
+    // })
+    // var a = [];
+    // a.push(1, 2);
+    // console.log(a);// [1,2]
+    // a.shift(3, 4);
+    // console.log(a);// [2]
+    // a.concat([5, 6]);
+    // console.log(a);// [2]
+    // a.splice(0, 1, 2)
+    // console.log(a); // [2]
+    // var out = 25
+    // var inner = {
+    //     out: 20,
+    //     func: function () {
+    //         var out = 30
+    //         return this.out
+    //     },
+    // }
+    // // 逗号运算符
+    // console.log((inner.func, inner.func)()) // 25
+    // console.log(inner.func())//25
+    // console.log((inner.func = inner.func)())
+    // .getCurrentPosition(success, error);
+
+    // function success(msg, position) {
+    //     console.log(msg);
+    //     console.log(position);
+    // }
+
+    // function error(msg) {
+    //     console.log(msg);
+    // // }
+    // let obj = { a: 1 }
+    // let a = Object.keys(obj)
+    // let arr = []
+    // for (let k in obj) {
+    //     arr.push(k)
+    // }
+    // console.log(a);
+    // let text = Symbol()
+    // let text2 = Symbol()
+    // obj.text = 1
+    // obj.text1 = 2
+    // // for (let k in obj) {
+    // //     console.log(k);
+    // // }
+    // // console.log(Object.keys(obj));
+    // console.log(obj);
+    // console.log(text === text2);
+    // var name = 999999
+
+
+    // const arr = [1, 2, 3, 4, 5, 5, 6, 8, 4, 63, 2, 455, 6, 2, 0, 6, 1, 4, 5, 5]
+    // function fn1(arr) {
+    //     let obj = {}
+    //     arr.forEach(ele => {
+    //         if (obj[ele]) {
+    //             obj[ele]++
+    //         } else {
+    //             obj[ele] = 1
+    //         }
+    //     })
+    //     return obj
+    // }
+    // console.log(fn1(arr));
+    // let div = document.querySelector('.container')
+    // div.addEventListener('click', fn,)
+    // let flag = true
+    // function fn() {
+    //     if (flag) {
+    //         flag = false
+    //         console.log(1);
+    //         flag = true
+    //     }
+    // }
+    // // fn()
+    // let obj = {}
+    // obj.a = 1
+    // console.log(obj.hasOwnProperty('a'));
+        
 </script>
 
 </html>

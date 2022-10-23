@@ -51,6 +51,7 @@ export default {
   name: 'Login',
   data() {
     return {
+      arr: [1, 2, { a: 2 }],
       // 1. 定义数据
       loginForm: {
         mobile: '13800000002',
@@ -79,6 +80,9 @@ export default {
       isLogin: false,
     }
   },
+  mounted() {
+    console.log(this.arr)
+  },
   methods: {
     async login() {
       // console.log('点击登录')
@@ -93,6 +97,9 @@ export default {
       }
     },
   },
+  created() {
+  },
+
 }
 </script>
 
